@@ -2,20 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WarehouseApp.DTOs;
 
-public class WarehouseDTO
-{
-    
-}
-
-public class OrderDTO
-{
-    
-}
-
-public class ProductDTO
-{
-    
-}
 public class ProductWarehouseDTO
 {
     public int IdWarehouse { get; set; }
