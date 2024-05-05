@@ -32,10 +32,7 @@ public class WarehouseController : ControllerBase
         {
             return BadRequest("No valid order found for this product.");
         }
-        /*if (!await _warehouseRepository.DoesCorrectOrderExist(productWarehouseInputDto.IdProduct, productWarehouseInputDto.Amount, productWarehouseInputDto.CreatedAt))
-        {
-            return BadRequest("No valid order found for this product.");
-        }*/
+        //Console.WriteLine(orderId);
 
         if (await _warehouseRepository.DoesIdOrderExistInProductWarehouse(orderId))
         {
@@ -45,6 +42,7 @@ public class WarehouseController : ControllerBase
         await _warehouseRepository.UpdateFullfilledAt(orderId);
 
         Decimal price = await _warehouseRepository.GetProductPrice(productWarehouseInputDto.IdProduct);
+        Console.WriteLine(price);
         
         var productWarehouseEntry = new ProductWarehouseDTO()
         {
@@ -53,7 +51,7 @@ public class WarehouseController : ControllerBase
             IdOrder = orderId,
             Amount = productWarehouseInputDto.Amount,
             Price = productWarehouseInputDto.Amount * price,
-            CreatedAt = DateTime.Now
+            CreatedAt = productWarehouseInputDto.CreatedAt
         };
 
         int productWarehouseId = await _warehouseRepository.InsertProductWarehouse(productWarehouseEntry);
